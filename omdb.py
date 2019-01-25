@@ -22,11 +22,18 @@ omdb_api = 'http://www.omdbapi.com/?t='
 
 for i, movie in enumerate(movies):
     # Set-up the API URL
-    movie.replace(" ", "+")
-    api_call = omdb_api + movie + '&apikey=' + my_api
+    movie = movie.replace(" ", "+").replace(')', '')
+
+    # Check if year is provided
+    m_yr = movie.split('+(')
+    if len(m_yr) > 1:
+        api_call = omdb_api + m_yr[0] + '&y=' + m_yr[1] + '&apikey=' + my_api
+
+    else:
+        api_call = omdb_api + movie + '&apikey=' + my_api
 
     # Retrieve the data
-    m_data = requests.get(api_call, timeout=10)
+    m_data = requests.get(api_call, timeout=5)
 
     # Convert the data in JSON
     m_json = m_data.json()
@@ -50,15 +57,16 @@ for i, movie in enumerate(movies):
     # Retrieve Box Office
     m_boxOffice.append(m_json.get('BoxOffice'))
 
-    print('Completed', m_title[i])  # debugging purposes
+    # Debugging purposes
+    # print('Completed', m_title[i])
 
 # Create a DataFrame
 m_dataframe = pd.DataFrame({'title': m_title,
                             'year': m_year,
                             'rt_rating': m_rt,
                             'boxoffice': m_boxOffice})
+# Check the DataFrame
+m_dataframe.head()
 
-m_dataframe
-
-movies2 = pd.read_table('data/movie_list.txt')
-movies2.values.flatten().tolist()[13].replace(')', '').split(' (')
+# Store the result in csv
+m_dataframe.to_csv('data/movie_rt_bo.csv', index=False)
