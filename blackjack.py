@@ -19,7 +19,7 @@ place_bet = True
 while place_bet:
     try:
         p1_bet = int(input(f'=== Your current wallet balance is ${p1_wallet}' +
-            ' ===\nHow much money would you like to place your bet? '))
+            ' ===\nHow much money would you like to place your bet? $'))
 
         if p1_bet > p1_wallet:
             print(f"You do not have enough money in your wallet." +
@@ -34,8 +34,17 @@ while place_bet:
 # TODO: Randomly select a player to cut the deck
 # Shuffle and ask player
 shuffle(six_deck)
-deck_cut = int(input('Player 1 will cut the deck.' +
-                'Player 1 please enter a random number between 50 - 75'))
+while True:
+    try:
+        deck_cut = int(input('\nPlayer 1 will cut the deck. Player 1 please ' +
+                        'enter a random number between 50 - 75. '))
+        if deck_cut < 50 or deck_cut > 75:
+            print('Please enter a number between 50 and 75.')
+        else:
+            break
+    except Exception as e:
+        print('Please enter a valid number.')
+
 playing_deck = six_deck[:-deck_cut]
 
 # Hands
@@ -45,4 +54,6 @@ p1 = []
 for i in range(2):
     p1.append(playing_deck.pop())
     dealer.append(playing_deck.pop())
-    
+
+print("Dealer's hand:", dealer)
+print("Player1's hand:", p1)
