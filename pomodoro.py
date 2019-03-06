@@ -1,4 +1,5 @@
 import string
+import csv
 from datetime import datetime
 
 print("\n-------------------------------------------")
@@ -8,12 +9,13 @@ print("-------------------------------------------\n")
 start_time = 0
 end_time = 0
 paused_time = []
+PATH = 'data\\pomodoro_files\\'
 
 # Read the subjects and learning materials available
-with open('data\\pomodoro_files\\subjects.txt') as subjects:
+with open(PATH + 'subjects.txt') as subjects:
     subject_list = subjects.read().splitlines()
 
-with open('data\\pomodoro_files\\learning_materials.txt') as learning_materials:
+with open(PATH + 'learning_materials.txt') as learning_materials:
     learning_list = learning_materials.read().splitlines()
 
 # Function for printing list
@@ -32,7 +34,7 @@ while True:
         while True:
             source = input('\nPlease specify the learning material you will' +
                            ' be using:' + print_list(learning_list) +
-                           '\n=> ') 
+                           '\n=> ')
             if source in ('a', 'b', 'c'):
                 break
             else:
@@ -86,6 +88,21 @@ print('End time:', end_time)
 print('Paused:', paused_time)
 print('Total time:', total_time)
 
+# Important informations to write in csv:
+# Start time, end time, number of paused time, total time, subject, material
+completed = [start_time,
+             end_time,
+             len(paused_time),
+             total_time,
+             subject,
+             source]
+             
+with open(PATH + 'study_data.csv', mode='a', newline='') as study_data:
+    writer = csv.writer(study_data)
+    writer.writerow(completed)
+
+
 # # TODO:
 # - Dictionary for the subjects and sources
 # - Include pause time in the total time calculation
+# - Ability to select multiple learning materials
