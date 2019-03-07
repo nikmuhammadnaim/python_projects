@@ -16,26 +16,33 @@ with open(PATH + 'subjects.txt') as subjects:
     subject_list = subjects.read().splitlines()
 
 with open(PATH + 'learning_materials.txt') as learning_materials:
-    learning_list = learning_materials.read().splitlines()
+    material_list = learning_materials.read().splitlines()
 
-# Function for printing list
-def print_list(my_list):
+# Create dictionary for subject and learning materials
+subj_dict = {alpha:subject for alpha, subject in zip(string.ascii_lowercase,
+                subject_list)}
+
+mat_dict = {alpha:material for alpha, material in zip(string.ascii_lowercase,
+                material_list)}
+
+# Function for printing dictionary contents
+def print_dict(my_dict):
     ready_list = ''
-    for num, item in zip(string.ascii_lowercase, my_list):
-        ready_list += "\n{}) {}".format(num, item)
+    for key, value in my_dict.items():
+        ready_list += "\n{}) {}".format(key, value)
     return ready_list
 
 # Select subject and learning material
 while True:
     subject = input('Please select one subject that you would ' +
-                    'like to study today:' + print_list(subject_list) +
+                    'like to study today:' + print_dict(subj_dict) +
                     '\n=> ')
-    if subject.lower() in ('a', 'b', 'c'):
+    if subject.lower() in subj_dict.keys():
         while True:
             source = input('\nPlease specify the learning material you will' +
-                           ' be using:' + print_list(learning_list) +
+                           ' be using:' + print_dict(mat_dict) +
                            '\n=> ')
-            if source in ('a', 'b', 'c'):
+            if source.lower() in mat_dict.keys():
                 break
             else:
                 print('Please enter a valid input!')
@@ -81,8 +88,8 @@ total_time = end_time - start_time
 print('\n=======================')
 print('Summary Report')
 print('=======================\n')
-print('Subject:', subject.title())
-print('Source:', source.title())
+print('Subject:', subj_dict.get(subject))
+print('Source:', mat_dict.get(source))
 print('Start time:', start_time)
 print('End time:', end_time)
 print('Paused:', paused_time)
@@ -94,9 +101,9 @@ completed = [start_time,
              end_time,
              len(paused_time),
              total_time,
-             subject,
-             source]
-             
+             subj_dict.get(subject),
+             mat_dict.get(source)]
+
 with open(PATH + 'study_data.csv', mode='a', newline='') as study_data:
     writer = csv.writer(study_data)
     writer.writerow(completed)
