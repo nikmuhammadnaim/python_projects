@@ -1,10 +1,11 @@
-import string
 import csv
+import string
+import time
 from datetime import datetime
 
 print("\n-------------------------------------------")
 print("Welcome to Nik Muhammad Naim's Pomodoro App")
-print("-------------------------------------------\n")
+print("-------------------------------------------")
 
 start_time = 0
 end_time = 0
@@ -32,9 +33,26 @@ def print_dict(my_dict):
         ready_list += "\n{}) {}".format(key, value)
     return ready_list
 
+# Countdown function
+def pomodoro_timer(t_minutes):
+    '''
+    Countdown clock function.
+    This function will display the time on the console.
+    '''
+    t_seconds = t_minutes * 60
+    while t_seconds:
+        minutes, seconds = divmod(t_seconds, 60)
+        # format integer to a field of minimum width 2 with 0 left paddings
+        t_display = '{:02d}:{:02d}'.format(minutes, seconds)
+        print(t_display, end='\r')
+        time.sleep(1)
+        t_seconds -= 1
+
+    print('Pomodoro set completed!')
+
 # Select subject and learning material
 while True:
-    subject = input('Please select one subject that you would ' +
+    subject = input('\nPlease select one subject that you would ' +
                     'like to study today:' + print_dict(subj_dict) +
                     '\n=> ')
     if subject.lower() in subj_dict.keys():
