@@ -125,9 +125,3 @@ completed = [start_time,
 with open(PATH + 'study_data.csv', mode='a', newline='') as study_data:
     writer = csv.writer(study_data)
     writer.writerow(completed)
-
-
-# # TODO:
-# - Dictionary for the subjects and sources
-# - Include pause time in the total time calculation
-# - Ability to select multiple learning materials
