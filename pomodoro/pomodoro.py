@@ -2,6 +2,7 @@ import csv
 import string
 import time
 from datetime import datetime
+from pomo_engine import *
 
 print("\n-------------------------------------------")
 print("Welcome to Nik Muhammad Naim's Pomodoro App")
@@ -10,7 +11,7 @@ print("-------------------------------------------")
 start_time = 0
 end_time = 0
 paused_time = []
-PATH = 'data\\pomodoro_files\\'
+PATH = 'data\\'
 
 # Read the subjects and learning materials available
 with open(PATH + 'subjects.txt') as subjects:
@@ -25,30 +26,6 @@ subj_dict = {alpha:subject for alpha, subject in zip(string.ascii_lowercase,
 
 mat_dict = {alpha:material for alpha, material in zip(string.ascii_lowercase,
                 material_list)}
-
-# Function for printing dictionary contents
-def print_dict(my_dict):
-    ready_list = ''
-    for key, value in my_dict.items():
-        ready_list += "\n{}) {}".format(key, value)
-    return ready_list
-
-# Countdown function
-def pomodoro_timer(t_minutes):
-    '''
-    Countdown clock function.
-    This function will display the time on the console.
-    '''
-    t_seconds = t_minutes * 60
-    while t_seconds:
-        minutes, seconds = divmod(t_seconds, 60)
-        # format integer to a field of minimum width 2 with 0 left paddings
-        t_display = '{:02d}:{:02d}'.format(minutes, seconds)
-        print(t_display, end='\r')
-        time.sleep(1)
-        t_seconds -= 1
-
-    print('Pomodoro set completed!')
 
 # Select subject and learning material
 while True:
