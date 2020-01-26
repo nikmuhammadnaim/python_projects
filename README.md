@@ -1,5 +1,5 @@
 # python_projects
-My playground for some random Python personal projects.
+My personal projects coded using Python.
 
 ## Project currently in development: 
   1. Pomodoro App
@@ -16,3 +16,7 @@ My playground for some random Python personal projects.
       
   3. OMDB Movie Extractor
       * Status: _On-hold_
+     
+  4. Web Scrapping
+      * Status: **Completed** :star: 
+      * Feature: Include automatic scrolling for website with infinite scrolling pages. Tested on SabayNews.com
